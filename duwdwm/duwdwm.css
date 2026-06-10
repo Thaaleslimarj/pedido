@@ -1,58 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap');
 
 *{
     margin: 0;
-    border: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
-body{
-    overflow: hidden;
-    background: linear-gradient(45deg, #841313, #AA1151);
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    min-width: 100vh;
+body {
+    background: linear-gradient(135deg, #ff4b6e, #8a0f3f);
+    height: 100vh;
     display: flex;
+    justify-content: center;
     align-items: center;
+    overflow: hidden;
+    color: white;
+}
+
+/* Container central */
+.container {
+    text-align: center;
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Título */
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px #fff;
+    animation: pulse 2.5s infinite alternate;
+}
+
+/* Botões */
+.buttons {
+    display: flex;
+    gap: 30px;
     justify-content: center;
 }
 
-body h1{
+button {
+    padding: 15px 40px;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+/* Botão SIM */
+#acept {
+    background-color: #4CAF50;
     color: white;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    position: relative;
+    box-shadow: 0 0 15px #4CAF50;
 }
 
-#no-touch{
+#acept:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px #4CAF50;
+}
+
+/* Botão NÃO (foge) */
+#no-touch {
+    background-color: #ff4b6e;
+    color: white;
     position: absolute;
-    white-space: nowrap;
-    font-size: 2rem;
-    padding: 1rem;
-    background-color: rgb(255, 0, 0);
-    cursor: pointer;
-    color: rgb(255, 255, 255);
-    font-weight: 300;
-    border-radius: 4px;
+    transition: 0.2s;
 }
 
-#acept{
+/* Faz o botão NÃO fugir */
+#no-touch:hover {
+    left: calc(10% + (80% * var(--rand-x)));
+    top: calc(10% + (60% * var(--rand-y)));
+}
+
+/* Corações flutuando */
+body::before, body::after {
+    content: "💖";
     position: absolute;
-    font-size: 2rem;
-    margin-top: 20rem;
-    padding: 2rem;
-    background-color: rgb(0, 91, 2);
-    cursor: pointer;
-    color: rgb(255, 255, 255);
-    font-weight: 300;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    font-size: 2.5rem;
+    animation: float 6s infinite ease-in-out;
+    opacity: 0.7;
 }
 
-body h1{
-    font-weight: 600;
-    margin-bottom: 40rem;
-    position: relative;
+body::before {
+    left: 20%;
+    animation-delay: 0s;
+}
+
+body::after {
+    left: 70%;
+    animation-delay: 3s;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { text-shadow: 0 0 10px #fff; }
+    100% { text-shadow: 0 0 25px #ffb3c6; }
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
 }

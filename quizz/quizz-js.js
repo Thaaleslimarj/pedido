@@ -2,61 +2,61 @@ let perguntas = [
 {
     titulo: 'Como minha irmã chama?',
     alternativas: ['Thaysa', 'Thalita', 'Thaís', 'Thamiris'],
-    correta: 3
+    correta: 2
 },
 
 {
     titulo: 'Qual o nome dos meus pais?',
     alternativas: ['Marcia e Joaci', 'Marta e Kinha', 'Marth e Jupiter', 'Marcia e João'],
-    correta: 1
+    correta: 0
 },
 
 {
     titulo: 'Top 3 da minha lista de comidas prediletas',
     alternativas: ['Pizza', 'Churrasco', 'Hamburguer', 'Japa'],
-    correta: 2
+    correta: 1
 },
 
 {
     titulo: 'Quantos animais de estimação eu tenho?',
-    alternativas: ['2', '4', '5', '6'],
-    correta: 1
+    alternativas: ['3', '4', '5', '6'],
+    correta: 0
 },
 
 {
     titulo: 'Como é meu apelido de infância?',
     alternativas: ['Cabelin', 'kaká', 'Polegar', 'Juvenal'],
-    correta: 3
+    correta: 2
 },
 
 {
     titulo: 'Quem é o mais fdp da série do THE BOYS?',
     alternativas: ['Todos', 'Capitão patria', 'Trem bala', 'Brutus'],
+    correta: 0
+},
+
+{
+    titulo: 'Qual minha idade?',
+    alternativas: ['18', '32', '30', '31'],
     correta: 1
 },
 
 {
-    titulo: 'Quantos minha idade?',
-    alternativas: ['18', '32', '30', '31'],
-    correta: 2
-},
-
-{
     titulo: 'Qual meu time do coração?',
-    alternativas: ['Atlético MG', 'Corinthian', 'Palmeiras', 'Flamengo'],
-    correta: 4
+    alternativas: ['Botafogo', 'Fluminense', 'Flamengo', 'Vasco'],
+    correta: 2
 },
 
 {
     titulo: 'O que já tirei do meu corpo?',
     alternativas: ['Siso', 'Apêndice', 'Amígdalas', 'Pênis'],
-    correta: 1
+    correta: 0
 },
 
 {
     titulo: 'Qual é o melhor jogador do mundo?',
     alternativas: ['Neymar', 'Neymar jr', 'Neymar 2026', 'Obina'],
-    correta: 3
+    correta: 2
 },
 
 {

@@ -1,253 +1,220 @@
 <!DOCTYPE html>
-<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
-<html>
-	<head>
-		<title>ACEITOU</title>
-		<style>
-		body{
-			background-color : #8cb3e3; 
-            
-		}
-
-        .imge{
-            height: 800px;
-            position: relative;
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACEITOU</title>
+    <style>
+        body {
+            background-color: #8cb3e3;
+            overflow: hidden;
+            margin: 0;
         }
 
-        img{
-            width: 20%;
+        /* TEXTO POR CIMA DA IMAGEM */
+        h1 {
+            font-family: Impact, sans-serif;
+            color: red;
+            font-size: 4rem;
+            text-shadow: 0 0 20px #fff;
+            animation: pulseText 2s infinite alternate;
             position: absolute;
-            top: 50%;
+            top: 5%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
+            z-index: 9999; /* FICA POR CIMA DE TUDO */
+            margin: 0;
         }
 
-		@keyframes 			firework-animation {
-			0% {background-color : #ff8426;}
-			25% {background-color : #fffc84;}
-			50% {background-color : #ff83f4;}
-			75% {background-color : #83b6ff;}
-			100% {background-color : #ff8426;}
-		}
-		@-webkit-keyframes 	firework-animation {
-			0% {background-color : #ff8426;}
-			25% {background-color : #fffc84;}
-			50% {background-color : #ff83f4;}
-			75% {background-color : #83b6ff;}
-			100% {background-color : #ff8426;}
-		}
-		@keyframes 			firework-seed-animation	{
-			0% {background-color : #ff8426;}
-			25% {background-color : #fffc84;}
-			100% {background-color : #ff8426;}
-		}
-		@-webkit-keyframes	firework-seed-animation	{
-			0% {background-color : #ff8426;}
-			25% {background-color : #fffc84;}
-			100% {background-color : #ff8426;}
-		}
-		@keyframes 			firework-fade-animation {
-			0% {opacity : 1;}
-			50% {opacity : 1;}
-			100% {opacity : 0;}
-		}
-		@-webkit-keyframes 	firework-fade-animation {
-			0% {opacity : 1;}
-			50% {opacity : 1;}
-			100% {opacity : 0;}
-		}
-		.fireWorkBatch {
-			z-index : 999;
-			position: absolute;
-			top : 0px;
-			left : 0px;
-			animation-name : firework-fade-animation;
-			animation-timing-function : cubic-bezier(0.5, 0, 1. 1);
-			animation-duration : 2.5s;
-		}
-		.fireWorkParticle {
-			z-index : 999;
-			position: absolute;
-			height : 5px;
-			width : 5px;
-			border-radius : 2.5px;
-			animation-name : firework-animation;
-			animation-timing-function : linear;
-			animation-duration : 1s;
-			animation-iteration-count : infinite;
-		}
-		.fireWorkSeed {
-			z-index : 999;
-			position: absolute;
-			height : 5px;
-			width : 5px;
-			border-radius : 5px;
-			animation-name : firework-seed-animation;
-			animation-timing-function : linear;
-			animation-duration : 0.5s;
-			animation-iteration-count : infinite;
-		}		
-		</style>
-	</head>
-	<body>
-        
-		<div id = "board"></div>
-		<center>
-			<h1><font style = "font-family:impact;color:red;">EU TE AMOOOO!!!!</h1>
-		</center>
+        @keyframes pulseText {
+            0% { text-shadow: 0 0 10px #fff; }
+            100% { text-shadow: 0 0 30px #ff4b6e; }
+        }
 
-        <div class="imge">
-            <img src="/Namoro/aceitou/omaigosh.jpeg">
-        </div>
-        
-	</body>
-	<script>
-		var brd = document.createElement("DIV");
-		document.body.insertBefore(brd, document.getElementById("board"));
+        /* IMAGEM CENTRAL */
+        .imge {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-		seeds = [];
-		particles = [];
+        img {
+            width: 70%;
+            max-width: 1000px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.7);
+            animation: pulseImg 3s infinite alternate;
+            z-index: 1;
+        }
 
-		const fwkPtcIniV = 0.5;
-		const fwkSedIniV = 0.5;
-		const fwkPtcIniT = 2500;
-		const fwkSedIniT = 1000;
-		const a = 0.0005;
-		const g = 0.0005;
-		const v = 0.3;
-		const cursorXOffset = 5;
-		const cursorYOffset = 0;
+        @keyframes pulseImg {
+            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 50px rgba(255, 0, 100, 0.8); }
+        }
 
+        /* FOGOS DE ARTIFÍCIO (mantidos iguais) */
+        @keyframes firework-animation {
+            0% { background-color: #ff8426; }
+            25% { background-color: #fffc84; }
+            50% { background-color: #ff83f4; }
+            75% { background-color: #83b6ff; }
+            100% { background-color: #ff8426; }
+        }
 
-		function newFireworkParticle(x, y, angle)
-		{
-			var fwkPtc = document.createElement("DIV");
-			fwkPtc.setAttribute('class', 'fireWorkParticle');
-			fwkPtc.time = fwkPtcIniT;
-			while(angle > 360)
-				angle -= 360;
-			while(angle < 0)
-				angle += 360;
-			fwkPtc.velocity = [];
-			if(angle > 270)
-			{
-				fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
-				fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
-			}
-			else if(angle > 180)
-			{
-				fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
-				fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
-			}
-			else if(angle > 90)
-			{
-				fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
-				fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
-			}
-			else
-			{
-				fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
-				fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
-			}
-			fwkPtc.position = [];
-			fwkPtc.position.x = x;
-			fwkPtc.position.y = y;
-			fwkPtc.style.left = fwkPtc.position.x + 'px';
-			fwkPtc.style.top = fwkPtc.position.y + 'px';
-			if(particles == null)
-				particles = [];
-			particles.push(fwkPtc);
-			return fwkPtc;
-		}
+        @keyframes firework-seed-animation {
+            0% { background-color: #ff8426; }
+            25% { background-color: #fffc84; }
+            100% { background-color: #ff8426; }
+        }
 
-		document.addEventListener("mousemove", newFireWorkOnClick);
+        @keyframes firework-fade-animation {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
 
-		function newFireWorkOnClick(event)
-		{
-			newFireworkSeed(event.pageX - brd.offsetLeft + cursorXOffset, event.pageY - brd.offsetTop + cursorYOffset);
-		}
+        .fireWorkBatch {
+            z-index: 999;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation-name: firework-fade-animation;
+            animation-duration: 2.5s;
+        }
 
-		function newFireworkSeed(x, y)
-		{
-			var fwkSed = document.createElement("DIV");
-			fwkSed.setAttribute('class', 'fireWorkSeed');
-			brd.appendChild(fwkSed);
-			fwkSed.time = fwkSedIniT;
-			fwkSed.velocity = [];
-			fwkSed.velocity.x = 0;
-			fwkSed.velocity.y = fwkSedIniV;
-			fwkSed.position = [];
-			fwkSed.position.x = x;
-			fwkSed.position.y = y;
-			fwkSed.style.left = fwkSed.position.x + 'px';
-			fwkSed.style.top = fwkSed.position.y + 'px';
-			if(seeds == null)
-				seeds = [];
-			seeds.push(fwkSed);
-			return fwkSed;
-		}
-		
-		function newFireWorkStar(x, y)
-		{
-			var fwkBch = document.createElement("DIV");
-			fwkBch.setAttribute('class', 'fireWorkBatch');
-			var a = 0;
-			while(a < 360)
-			{
-				var fwkPtc = newFireworkParticle(x, y, a);
-				fwkBch.appendChild(fwkPtc);
-				a += 5;
-			}
-			brd.appendChild(fwkBch);
-		}
+        .fireWorkParticle {
+            z-index: 999;
+            position: absolute;
+            height: 5px;
+            width: 5px;
+            border-radius: 2.5px;
+            animation-name: firework-animation;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
 
-		var before = Date.now();
-		var id = setInterval(frame, 5);
-		
-		function frame()
-		{
-			var current = Date.now();
-			var deltaTime = current - before;
-			before = current;
-			for(i in seeds)
-			{
-				var fwkSed = seeds[i];
-				fwkSed.time -= deltaTime;
-				if(fwkSed.time > 0)
-				{
-					fwkSed.velocity.x -= fwkSed.velocity.x * a * deltaTime;
-					fwkSed.velocity.y -= g * deltaTime + fwkSed.velocity.y * a * deltaTime;
-					fwkSed.position.x += fwkSed.velocity.x * deltaTime;
-					fwkSed.position.y -= fwkSed.velocity.y * deltaTime;
-					fwkSed.style.left = fwkSed.position.x + 'px';
-					fwkSed.style.top = fwkSed.position.y + 'px';
-				}
-				else
-				{
-					newFireWorkStar(fwkSed.position.x, fwkSed.position.y);
-					fwkSed.parentNode.removeChild(fwkSed);
-					seeds.splice(i, 1);
-				}
-			}
-			for(i in particles)
-			{
-				var fwkPtc = particles[i];
-				fwkPtc.time -= deltaTime;
-				if(fwkPtc.time > 0)
-				{
-					fwkPtc.velocity.x -= fwkPtc.velocity.x * a * deltaTime;
-					fwkPtc.velocity.y -= g * deltaTime + fwkPtc.velocity.y * a * deltaTime;
-					fwkPtc.position.x += fwkPtc.velocity.x * deltaTime;
-					fwkPtc.position.y -= fwkPtc.velocity.y * deltaTime;
-					fwkPtc.style.left = fwkPtc.position.x + 'px';
-					fwkPtc.style.top = fwkPtc.position.y + 'px';
-				}
-				else
-				{
-					fwkPtc.parentNode.removeChild(fwkPtc);
-					particles.splice(i, 1);
-				}
-			}
-		}
-	</script>
+        .fireWorkSeed {
+            z-index: 999;
+            position: absolute;
+            height: 5px;
+            width: 5px;
+            border-radius: 5px;
+            animation-name: firework-seed-animation;
+            animation-duration: 0.5s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="board"></div>
+
+    <!-- TEXTO AGORA FICA POR CIMA -->
+    <h1>EU TE AMOOOO!!!! 💞</h1>
+
+    <div class="imge">
+        <img src="/Namoro/aceitou/omaigosh.jpeg" alt="Casal feliz">
+    </div>
+
+    <script>
+        var brd = document.createElement("DIV");
+        document.body.insertBefore(brd, document.getElementById("board"));
+
+        let seeds = [];
+        let particles = [];
+
+        const fwkPtcIniV = 0.5;
+        const fwkSedIniV = 0.5;
+        const fwkPtcIniT = 2500;
+        const fwkSedIniT = 1000;
+        const a = 0.0005;
+        const g = 0.0005;
+        const v = 0.3;
+
+        document.addEventListener("mousemove", newFireWorkOnClick);
+
+        function newFireWorkOnClick(event) {
+            newFireworkSeed(event.pageX, event.pageY);
+        }
+
+        function newFireworkSeed(x, y) {
+            var fwkSed = document.createElement("DIV");
+            fwkSed.className = "fireWorkSeed";
+            brd.appendChild(fwkSed);
+            fwkSed.time = fwkSedIniT;
+            fwkSed.velocity = { x: 0, y: fwkSedIniV };
+            fwkSed.position = { x, y };
+            fwkSed.style.left = x + "px";
+            fwkSed.style.top = y + "px";
+            seeds.push(fwkSed);
+        }
+
+        function newFireworkParticle(x, y, angle) {
+            var fwkPtc = document.createElement("DIV");
+            fwkPtc.className = "fireWorkParticle";
+            fwkPtc.time = fwkPtcIniT;
+            fwkPtc.velocity = {
+                x: fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v),
+                y: fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v)
+            };
+            fwkPtc.position = { x, y };
+            fwkPtc.style.left = x + "px";
+            fwkPtc.style.top = y + "px";
+            particles.push(fwkPtc);
+            return fwkPtc;
+        }
+
+        function newFireWorkStar(x, y) {
+            var fwkBch = document.createElement("DIV");
+            fwkBch.className = "fireWorkBatch";
+            for (let a = 0; a < 360; a += 5) {
+                fwkBch.appendChild(newFireworkParticle(x, y, a));
+            }
+            brd.appendChild(fwkBch);
+        }
+
+        var before = Date.now();
+        setInterval(frame, 5);
+
+        function frame() {
+            var current = Date.now();
+            var deltaTime = current - before;
+            before = current;
+
+            for (let i in seeds) {
+                var fwkSed = seeds[i];
+                fwkSed.time -= deltaTime;
+                if (fwkSed.time > 0) {
+                    fwkSed.velocity.y -= g * deltaTime;
+                    fwkSed.position.y -= fwkSed.velocity.y * deltaTime;
+                    fwkSed.style.top = fwkSed.position.y + "px";
+                } else {
+                    newFireWorkStar(fwkSed.position.x, fwkSed.position.y);
+                    fwkSed.remove();
+                    seeds.splice(i, 1);
+                }
+            }
+
+            for (let i in particles) {
+                var fwkPtc = particles[i];
+                fwkPtc.time -= deltaTime;
+                if (fwkPtc.time > 0) {
+                    fwkPtc.velocity.y -= g * deltaTime;
+                    fwkPtc.position.x += fwkPtc.velocity.x * deltaTime;
+                    fwkPtc.position.y -= fwkPtc.velocity.y * deltaTime;
+                    fwkPtc.style.left = fwkPtc.position.x + "px";
+                    fwkPtc.style.top = fwkPtc.position.y + "px";
+                } else {
+                    fwkPtc.remove();
+                    particles.splice(i, 1);
+                }
+            }
+        }
+    </script>
+
+</body>
 </html>
