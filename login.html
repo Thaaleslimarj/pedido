@@ -2,24 +2,142 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff4b6e, #8a0f3f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Poppins", sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Corações animados no fundo */
+        body::before, body::after {
+            content: "💖";
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.4;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        body::before {
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        body::after {
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(255,255,255,0.4);
+            text-align: center;
+            width: 300px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px #fff;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px #fff; }
+            100% { text-shadow: 0 0 20px #ffb3c6; }
+        }
+
+        .inputs {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.8);
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ff4b6e;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        input[type="submit"]:hover {
+            transform: scale(1.05);
+            background: #ff6f8c;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        .dica {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            animation: typing 4s steps(40) infinite alternate;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid white;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+    </style>
 </head>
 <body>
-'    <main class="container">
+
+    <main class="container">
         <h2>Bem-vinda, Leticia!</h2>
-        <img src="imagens/img-login.png" alt="Us" width=80 height=80 class="img-log">
-        <form action="">
+
+        <form>
             <div class="inputs">
-                <input type="password" id="password"  placeholder="Password">
-                <div class="underline"></div>
+                <input type="password" id="password" placeholder="Senha">
             </div>
-            <input type="submit" onclick="log(); return false">
+
+            <input type="submit" value="Entrar" onclick="log(); return false">
+
             <div class="dica">Dica: data do nosso primeiro encontro (dd/mm).</div>
         </form>
-    </main>'
+    </main>
 
     <script>
         function log(){
@@ -29,7 +147,7 @@
                 alert('Parabéns bb!');
                 location.href = "/Namoro/game/html/index.html";
             }else{
-                alert('Pensa mais ou pouco!');
+                alert('Pensa mais um pouco!');
             }
         }
     </script>
